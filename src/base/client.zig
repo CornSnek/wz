@@ -189,7 +189,7 @@ pub fn BaseClient(comptime Reader: type, comptime Writer: type) type {
             var bytes: [14]u8 = undefined;
             var len: usize = 2;
 
-            bytes[0] = @enumToInt(header.opcode);
+            bytes[0] = @intFromEnum(header.opcode);
 
             if (header.fin) bytes[0] |= 0x80;
             if (header.rsv1) bytes[0] |= 0x40;
@@ -207,11 +207,11 @@ pub fn BaseClient(comptime Reader: type, comptime Writer: type) type {
             bytes[1] = 0x80;
 
             if (header.length < 126) {
-                bytes[1] |= @truncate(u8, header.length);
+                bytes[1] |= @as(u8, @truncate(header.length));
             } else if (header.length < 0x10000) {
                 bytes[1] |= 126;
 
-                mem.writeIntBig(u16, bytes[2..4], @truncate(u16, header.length));
+                mem.writeIntBig(u16, bytes[2..4], @as(u16, @truncate(header.length)));
                 len += 2;
             } else {
                 bytes[1] |= 127;
@@ -238,7 +238,7 @@ pub fn BaseClient(comptime Reader: type, comptime Writer: type) type {
             var buffer: [mask_buffer_size]u8 = undefined;
             var index: usize = 0;
 
-            for (payload) |c, i| {
+            for (payload, 0..) |c, i| {
                 buffer[index] = c ^ self.current_mask[(i + self.mask_index) % 4];
 
                 index += 1;
@@ -305,7 +305,7 @@ pub fn BaseClient(comptime Reader: type, comptime Writer: type) type {
                 } else unreachable;
             }
 
-            const size = std.math.min(buffer.len, self.payload_size - self.payload_index);
+            const size = @min(buffer.len, self.payload_size - self.payload_index);
             const end = self.payload_index + size;
 
             mem.copy(u8, buffer[0..size], self.read_buffer[self.payload_index..end]);
@@ -346,7 +346,7 @@ test "example usage" {
     const Reader = @TypeOf(reader);
     const Writer = @TypeOf(writer);
 
-    const seed = @truncate(u64, @bitCast(u128, std.time.nanoTimestamp()));
+    const seed = @as(u64, @as(u128, @bitCast(std.time.nanoTimestamp())));
     var prng = std.rand.DefaultPrng.init(seed);
 
     var handshake = BaseClient(Reader, Writer).handshake(&buffer, reader, writer, prng.random());

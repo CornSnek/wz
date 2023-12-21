@@ -1,0 +1,10 @@
+.{
+    .name = "wz",
+    .version = "0.0.7",
+    .dependencies = .{
+        .hzzp = .{
+            .url = "https://github.com/truemedian/hzzp/archive/31563ce8173038aff326f83b18d49d84e2737255.tar.gz",
+            .hash = "12207cc27f0a87689c77c91265373546d3c9ce1f8c8ae716f6237edf40dc783ccf9d",
+        },
+    },
+}
