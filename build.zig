@@ -7,6 +7,9 @@ pub fn build(b: *Builder) void {
     const hzzp_mod = b.addModule("hzzp", .{ .source_file = .{
         .path = hzzp_dep.builder.pathFromRoot(hzzp_dep.module("hzzp").source_file.path),
     } });
+    _ = b.addModule("wz", .{
+        .source_file = .{ .path = "src/main.zig" },
+    });
     const unit_tests = b.addTest(.{
         .root_source_file = .{ .path = "src/main.zig" },
         .target = target,
