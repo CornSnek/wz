@@ -4,7 +4,7 @@ pub fn build(b: *Builder) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
     const hzzp_dep = b.dependency("hzzp", .{});
-    const hzzp_mod = b.addModule("hzzp", .{ .source_file = .{
+    const hzzp_mod = b.createModule(.{ .source_file = .{
         .path = hzzp_dep.builder.pathFromRoot(hzzp_dep.module("hzzp").source_file.path),
     } });
     _ = b.addModule("wz", .{
