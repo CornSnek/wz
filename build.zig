@@ -9,6 +9,7 @@ pub fn build(b: *Builder) void {
     } });
     _ = b.addModule("wz", .{
         .source_file = .{ .path = "src/main.zig" },
+        .dependencies = &.{.{ .name = "hzzp", .module = hzzp_mod }},
     });
     const unit_tests = b.addTest(.{
         .root_source_file = .{ .path = "src/main.zig" },
