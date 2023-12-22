@@ -1,4 +1,5 @@
 # wz
+(The purpose of this fork was trying to test to see how Zig modules interact with each other, and to use this library)
 
 [![Linux Workflow Status](https://img.shields.io/github/workflow/status/truemedian/wz/Linux?label=Linux&style=for-the-badge)](https://github.com/truemedian/wz/actions/workflows/linux.yml)
 [![Windows Workflow Status](https://img.shields.io/github/workflow/status/truemedian/wz/Windows?label=Windows&style=for-the-badge)](https://github.com/truemedian/wz/actions/workflows/windows.yml)
